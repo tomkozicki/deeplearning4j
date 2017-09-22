@@ -105,7 +105,7 @@ public class Yolo2OutputLayer extends AbstractLayer<org.deeplearning4j.nn.conf.l
         // grid location or not. Here: we are using the fact that class labels are one-hot, and assume that values are
         // all 0s if no class label is present
         int size1 = labels.size(1);
-        INDArray classLabels = labels.get(all(), interval(4,size1), all(), all());
+        INDArray classLabels = labels.get(all(), interval(4,size1), all(), all()).dup();    //TEMP WORKAROUND FOR POSSIBlE ND4J BUG
         INDArray maskObjectPresent = classLabels.sum(Nd4j.createUninitialized(nhw, 'c'), 1); //Shape: [minibatch, H, W]
 
         // ----- Step 1: Labels format conversion -----
